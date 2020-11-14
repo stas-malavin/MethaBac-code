@@ -1,0 +1,15 @@
+# Trim the reads with Trimmomatic
+TrimmomaticPE -threads 16 -phred33 MK4_S80_L001_R1_001.fastq.gz MK4_S80_L001_R2_001.fastq.gz fwd_pair.fq.gz fwd_unpair.fq.gz rev_pair.fq.gz rev_unpair.fq.gz ILLUMINACLIP:adapter.fa:2:40:15 HEADCROP:10 MINLEN:230
+
+# Build a bowtie2 index from the reference genome
+bowtie2-build Mvet_GCF_000745485.1_ASM74548v1_genomic.fna ASM74548-bowtie
+
+# Align with bowtie2
+bowtie2 -x ../ASM74548-bowtie --threads 16 --very-sensitive -1 fwd_pair.fq.gz -2 rev_pair.fq.gz -S ASM74548-bowtie.sam
+
+# Filter for matching reads longer than 20bp | convert in sam format | sort the output in bam format
+awk 'BEGIN{FS = "[\t]"}{if (($3 != "*" && (length($10)>=20)) || $1 ~ /^@/ ){print}}' ASM74548-bowtie.sam | samtools view -Sb - | samtools sort -o ASM74548-bowtie_mapped.bam
+
+# Index the bam output to use it with viewers like tablet or IGV
+# This creates a .bai file that needs to be in the same folder as .bam
+samtools index ASM74548-bowtie_mapped.bam
