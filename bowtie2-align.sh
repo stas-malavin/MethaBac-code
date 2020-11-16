@@ -31,7 +31,7 @@ done
 bowtie2-build $REF $REF
 
 # Align the reads with bowtie2
-bowtie2 -1 $READ1 -2 $READ2 -x $REF --threads $THREADS --very-sensitive -S - |\
+bowtie2 -1 $READ1 -2 $READ2 -x $REF --threads $THREADS --very-sensitive |\
 	awk 'BEGIN{FS = "[\t]"}{if (($3 != "*" && (length($10)>=20)) || $1 ~ /^@/ ){print}}' |\
         samtools view -Sb - |\
 	samtools sort -o $REF-bowtie_mapped.bam
