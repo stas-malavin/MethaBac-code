@@ -4,8 +4,8 @@
 while getopts :ha:b:r:t:o: opt; do
 	case $opt in 
 		h) printf "USAGE:
-align.sh -a <forward reads> -b <reverse reads> -r <reference genome> -o <prefix> -t <number of threads>
-align.sh -h
+bowtie2-align.sh -a <forward reads> -b <reverse reads> -r <reference genome> -o <prefix> -t <number of threads>
+bowtie2-align.sh -h
 -a\tforward reads
 -b\treverse reads
 -r\tReference genome (fasta)
@@ -35,7 +35,8 @@ if [[ ! -e $REF.1.bt2 ]]; then
 fi
 
 # Align the reads with bowtie2
-bowtie2 -1 $READ1 -2 $READ2 -x $REF --threads $THREADS --very-sensitive |\
+bowtie2 -1 $READ1 -2 $READ2 -x $REF --threads $THREADS --very-sensitive \
+	--un $OUT-unpair-unalign.fq --un-conc-gz $OUT-pair-unconc.fq |\
 	awk 'BEGIN{FS = "[\t]"}{if (($3 != "*" && (length($10)>=20)) || $1 ~ /^@/ ){print}}' |\
         samtools view -Sb - |\
 	samtools sort -o $OUT-mapped.bam

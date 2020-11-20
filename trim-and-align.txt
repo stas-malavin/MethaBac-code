@@ -13,3 +13,7 @@ awk 'BEGIN{FS = "[\t]"}{if (($3 != "*" && (length($10)>=20)) || $1 ~ /^@/ ){prin
 # Index the bam output to use it with viewers like tablet or IGV
 # This creates a .bai file that needs to be in the same folder as .bam
 samtools index ASM74548-bowtie_mapped.bam
+
+# Filter unmapped reads
+samtools view -f 4 Mvet_trimmed-mapped.bam > Mvet_trimmed-unmapped.sam
+# To get .bam add -b. To filter mapped reads, use -F 4.
