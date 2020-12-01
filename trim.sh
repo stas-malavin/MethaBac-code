@@ -44,3 +44,4 @@ java -jar /home/stas/Programs/Trimmomatic-0.39/trimmomatic-0.39.jar PE \
 	ILLUMINACLIP:$ADAPTER:2:40:15:1:true \
 	SLIDINGWINDOW:4:15 \
 	MINLEN:240
+#Input Read Pairs: 3320440 Both Surviving: 2124802 (63.99%) Forward Only Surviving: 87267 (2.63%) Reverse Only Surviving: 36129 (1.09%) Dropped: 1072242 (32.29%)
