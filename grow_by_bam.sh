@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu
+
 bam=$1
 dir=$2
 
