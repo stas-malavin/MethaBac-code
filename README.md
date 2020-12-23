@@ -5,3 +5,5 @@ Currently, a ```.txt``` file contains the commands I used for trimming and align
 Actually, I created it mainly to learn how to use named arguments in bash scripts :)
 
 ```spades-align-with-scaffolds.sh``` script contains commands used for a de-novo assembly with spades (with the assistance of the preexisted scaffolds).
+
+bla-bla
