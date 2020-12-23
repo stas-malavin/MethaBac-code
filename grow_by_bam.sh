@@ -62,5 +62,5 @@ then aligning the result to the whole contig with mafft FFT-NS-2 ..."
 
 done
 
-rm "$dir"/*.fai
+if [[ -e "$dir"/*.fai ]]; then rm "$dir"/*.fai; fi
   
